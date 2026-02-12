@@ -20,7 +20,7 @@ namespace Game.Runtime
             button.onClick.RemoveListener(OnButtonClick);
         }
 
-        private void OnButtonClick()
+        private static void OnButtonClick()
         {
             var gameState = ServiceResolver.Resolve<GameState>();
             var damageService = ServiceResolver.Resolve<IDamageService>();

@@ -21,16 +21,19 @@ namespace Game.Runtime
             container.RegisterSingletonInstance<IGameLog>(logger);
 
             var gameState = new GameState();
-            gameState.GoodGuy.Name = "Good Sandy";
+            gameState.GoodGuy.Name.Value = "Good Sandy";
             gameState.GoodGuy.Health.Value = 10;
             gameState.GoodGuy.Damage.Value = 1;
-            gameState.BadGuy.Name = "Bad Sandy";
+            gameState.BadGuy.Name.Value = "Bad Sandy";
             gameState.BadGuy.Health.Value = 10;
             gameState.BadGuy.Damage.Value = 1;
             container.RegisterSingletonInstance(gameState);
 
             var damageService = new DamageService(logger);
             container.RegisterSingletonInstance<IDamageService>(damageService);
+            
+            var stringService = new StringService(logger);
+            container.RegisterSingletonInstance<IStringService>(stringService);
             
             return container;
         });

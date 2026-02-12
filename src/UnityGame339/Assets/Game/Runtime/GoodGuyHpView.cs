@@ -1,15 +1,12 @@
 using Game339.Shared;
 using Game339.Shared.Models;
 using TMPro;
-using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Game.Runtime
 {
     using System;
     using UnityEngine;
 
-    
     [Serializable]
     public class ObservableInt : ObservableValue<int>, ISerializationCallbackReceiver
     {
@@ -19,24 +16,23 @@ namespace Game.Runtime
         public void OnBeforeSerialize()   => initialValue = Value;
     }
 
-    
-public class GoodGuyHpView : ObserverMonoBehaviour
-{
-    private static GameState GameState => ServiceResolver.Resolve<GameState>();
-
-    public TextMeshProUGUI thisIsMyLabel;
-    
-    public bool useAlternativeMessage;
-    
-    protected override void Subscribe() => GameState.GoodGuy.Health.ChangeEvent += OnGoodGuyHealthChange;
-
-    protected override void Unsubscribe() => GameState.GoodGuy.Health.ChangeEvent -= OnGoodGuyHealthChange;
-
-    private void OnGoodGuyHealthChange(int health)
+    public class GoodGuyHpView : ObserverMonoBehaviour
     {
-        thisIsMyLabel.text = useAlternativeMessage 
-            ? "WAT?? -" + health 
-            : "Health: " + health;
+        private static GameState GameState => ServiceResolver.Resolve<GameState>();
+
+        public TextMeshProUGUI thisIsMyLabel;
+
+        public bool useAlternativeMessage;
+
+        protected override void Subscribe() => GameState.GoodGuy.Health.ChangeEvent += OnGoodGuyHealthChange;
+
+        protected override void Unsubscribe() => GameState.GoodGuy.Health.ChangeEvent -= OnGoodGuyHealthChange;
+
+        private void OnGoodGuyHealthChange(int health)
+        {
+            thisIsMyLabel.text = useAlternativeMessage
+                ? "WAT?? -" + health
+                : "Health: " + health;
+        }
     }
-}
 }
