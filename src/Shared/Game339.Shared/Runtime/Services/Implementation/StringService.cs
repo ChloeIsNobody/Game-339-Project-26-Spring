@@ -22,6 +22,8 @@ namespace Game339.Shared.Services.Implementation
 
         public string ReverseWords(string input)
         {
+            if (input == null) throw new System.ArgumentNullException();
+            
             string output = "";
 
             (string text, bool isSeparator) currentWord = ("", false);
@@ -35,12 +37,14 @@ namespace Game339.Shared.Services.Implementation
                     currentWord.text = "";
                 }
                 
-                currentWord.text += letter;
+                currentWord.text = isWordSeparator(letter) ? letter + currentWord.text : currentWord.text + letter;
             }
+            
+            output = currentWord.text + output;
             
             return output;
 
-            bool isWordSeparator(char c) => char.IsSeparator(c);
+            bool isWordSeparator(char c) => char.IsSeparator(c) || char.IsWhiteSpace(c);
         }
     }
 }
